@@ -6,6 +6,6 @@ class AssertFailed < RuntimeError
 end
 
 def assert &block 
-	raise AssertFailed unless yield
+  raise AssertFailed unless yield
 end
 
