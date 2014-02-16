@@ -17,28 +17,6 @@ The square of the sum of the first ten natural numbers is,
 
 =end
 
-def waz(num)
-  factors = (1..num).to_a
-  for i in (2..num)
-    for j in (i+1..num)
-      if j % i == 0
-        puts "removing #{i}"
-        factors.delete(i) 
-      end
-    end
-  end
-  puts factors.inspect
-  puts factors.inject(1) { |a,b| a*b }
-  num = 1
-  while 1
-    if factors.all? { |factor| num % factor == 0 }
-      puts "returning #{num}"
-      return num
-    end
-    num += 1
-  end
-end
-
 def sum_squares(num)
   (1..num)
     .map { |a| a*a }
