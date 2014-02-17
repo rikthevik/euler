@@ -11,45 +11,35 @@ Find the sum of all the primes below two million.
 
 =end
 
+# It's the sieve of Erasthones!
 
-Primes = [ 2 ]
+Max = 2_000_000
+Nums = Array.new(Max, true) # 0..Max-1
 
-def _is_prime(n)
-  upper_bound = Math.sqrt(n).to_i
-  for i in Primes
-    if i == n
-      return true
-    elsif n % i == 0
-      # puts "isn't prime based on primes"
-      return false
-    end
+# We know that 2 is prime.
+Nums[2] = true
+currPrime = 2
+Primes = [2]
+
+while currPrime < Max
+#  puts "currPrime = #{currPrime}"
+  currPrime.step(Max, currPrime) { |i| Nums[i] = false }
+  prospectiveNewPrime = currPrime+1
+  while Nums[prospectiveNewPrime] == false
+    prospectiveNewPrime += 1
   end
-  for i in Primes[-1]..upper_bound
-    if n % i == 0
-      # puts "isn't prime based on new count"
-      return false
-    end
+  if prospectiveNewPrime >= Max
+    break
+  else
+    currPrime = prospectiveNewPrime
+    puts "adding new prime #{currPrime}"
+    Primes.push(currPrime)
   end
-  # puts "is prime - created new prime #{n}"
-  Primes.push(n)
-  return true
+#   currPrime = Nums[currPrime, Nums.length]
+#     .map.with_index { |is_prime, num|  puts "#{is_prime} : #{num}" ; is_prime && num } 
+#     .detect { |val| val }
 end
 
-def is_prime(n)
-  retval = _is_prime(n)
-  # puts "is_prime(#{n}) => #{retval}"
-  return retval
-end
-
-i = 2
-while Primes[-1] < 2_000_000
-  is_prime i
-  i += 1
-end
-# Remove the last one that's greater than 2M
-Primes.slice! -1
-
+puts "printing."
 puts Primes.inject(0) { |a,b| a+b }
-
-
 
